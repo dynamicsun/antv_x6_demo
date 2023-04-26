@@ -3,9 +3,12 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  Injector,
+  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { Graph } from '@antv/x6';
+import { register } from '@antv/x6-angular-shape';
 
 @Component({
   selector: 'app-station-structure-graph',
@@ -14,10 +17,21 @@ import { Graph } from '@antv/x6';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StationStructureGraphComponent implements AfterContentInit {
+  constructor(private readonly injector: Injector) {}
   @ViewChild('graphContainer', { static: true })
   graphContainerRef!: ElementRef<HTMLDivElement>;
 
+  @ViewChild('customNodeTemplate', { static: true })
+  customNodeTemplateRef!: TemplateRef<any>;
   ngAfterContentInit(): void {
+    const SHAPE = 'custom-node-1';
+    register({
+      content: this.customNodeTemplateRef,
+      shape: SHAPE,
+      width: 120,
+      height: 30,
+      injector: this.injector,
+    });
     const graph = new Graph({
       container: this.graphContainerRef.nativeElement,
       grid: true,
@@ -29,6 +43,8 @@ export class StationStructureGraphComponent implements AfterContentInit {
       width: 80,
       height: 40,
       label: 'Hello',
+      shape: SHAPE,
+      data: { ngArguments:{ value: 19.78 } },
     });
 
     const target = graph.addNode({
