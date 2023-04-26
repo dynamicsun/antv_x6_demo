@@ -1,0 +1,5 @@
+{
+    // eslint used
+    "tslint.enable": false,
+    "prettier.enable": true
+}
