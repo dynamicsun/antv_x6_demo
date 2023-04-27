@@ -80,4 +80,77 @@
     </svg>
   </div>
 </ng-template>
-<ng-template [appShapeDefinition]="conf.sep1i2o1"> Сепаратор </ng-template>
+<ng-template [appShapeDefinition]="conf.sep1i2o1" let-data="ngArguments">
+  <div class="el el-separator">
+    {{ data.conf.title }}
+    <svg
+      class="separator-image"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="1.1"
+      width="260px"
+      height="200px"
+      viewBox="-0.5 -0.5 262 202"
+    >
+      <defs />
+      <g>
+        <path
+          d="M 170 120 L 170 160.03 L 170 200"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 210.24 25.08 L 235.03 25.07 L 260 25"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 130 0 L 210 0 L 210 80 L 170 120 L 130 80 Z"
+          fill="rgb(255, 255, 255)"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 165 15 C 181.57 15 195 21.72 195 30 C 195 38.28 181.57 45 165 45 C 161.32 45.08 157.86 44.15 155.97 42.57 C 154.08 40.99 154.08 39.02 155.97 37.44 C 157.86 35.86 161.32 34.93 165 35.01 C 175.9 34.87 186.09 37.7 191.63 42.39 C 197.16 47.09 197.16 52.92 191.63 57.62 C 186.09 62.31 175.9 65.14 165 65"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 165 63 L 165 67 L 160 65 Z"
+          fill="rgb(0, 0, 0)"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 45.21 71.34 L 45.17 135.62 L 45.21 200"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 90.42 26.04 L 129.17 26.03"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 38.98 36.14 L 45.42 42.48 L 51.86 36.14 M 45.42 52.4 L 45.42 71.34 M 19.1 26.06 L 45.42 0 L 71.56 26.06 L 45.42 52.4 Z M 0 26.06 L 19.1 26.06 M 90.42 26.06 L 71.56 26.06 M 28.98 36.1 L 61.54 36.1"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+      </g>
+    </svg>
+  </div>
+</ng-template>

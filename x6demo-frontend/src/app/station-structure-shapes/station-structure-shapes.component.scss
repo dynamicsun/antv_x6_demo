@@ -21,17 +21,24 @@ $padding: 5px;
   background: #294;
 }
 
-.el-tank {
-  position: relative;
-  background-color: wheat;
-  .tank-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    path {
-      fill: none;
-      stroke: black;
-      stroke-width: 2px;
+@mixin sub-svg($elSelector, $imageSelector) {
+  #{$elSelector} {
+    position: relative;
+    background-color: wheat;
+    #{$imageSelector} {
+      position: absolute;
+      top: 0;
+      left: 0;
+      path {
+        fill: none;
+        stroke: black;
+        stroke-width: 2px;
+      }
     }
   }
+}
+@include sub-svg(".el-tank", ".tank-image");
+@include sub-svg(".el-separator", ".separator-image");
+.separator-image {
+  margin-top: 30px;
 }

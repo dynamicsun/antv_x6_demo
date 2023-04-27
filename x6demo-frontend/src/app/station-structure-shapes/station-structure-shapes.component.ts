@@ -51,19 +51,23 @@ export class StationStructureShapesComponent {
         groups: { g: absPortGroup },
         items: [
           { id: 'i1', args: { x: 0, y: 165 }, group: 'g' },
-          { id: 'main', args: { x: '100%', y: 165 }, group: 'g'  },
+          { id: 'main', args: { x: '100%', y: 165 }, group: 'g' },
         ],
       },
     }),
     sep1i2o1: c({
       shape: 'station-structure-sep-1i-2o-1rem',
-      ...defSize,
-      ports: [
-        { id: 'i1' },
-        { id: 'product1' },
-        { id: 'product2' },
-        { id: 'remains' },
-      ],
+      width: 260,
+      height: 200,
+      ports: {
+        groups: { g: absPortGroup },
+        items: [
+          { id: 'i1', group: 'g', args: { x: 0, y: 57 } },
+          { id: 'product1', group: 'g', args: { x: '100%', y: 57 } },
+          { id: 'product2', group: 'g', args: { x: 46, y: '100%' } },
+          { id: 'remains', group: 'g', args: { x: 170, y: '100%' } },
+        ],
+      },
     }),
   };
 }
