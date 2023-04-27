@@ -3,13 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { StationStructureGraphComponent } from './station-structure-graph/station-structure-graph.component';
 
 const routes: Routes = [
+  // {
+  //   path: '',
+  //   pathMatch: 'full',
+  //   redirectTo: 'object-1',
+  // },
   {
-    path: '',
-    pathMatch: 'full',
-    redirectTo: 'object-1',
-  },
-  {
-    path: 'object-1',
+    path: 'stations/:stationId',
     component: StationStructureGraphComponent,
   },
 ];

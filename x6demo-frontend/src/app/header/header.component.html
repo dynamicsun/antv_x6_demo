@@ -1,1 +1,7 @@
-<p>header works!</p>
+<div>
+  <a
+    *ngFor="let station of stations$ | async"
+    [routerLink]="['stations', station.id]"
+    >{{ station.title }}</a
+  >
+</div>

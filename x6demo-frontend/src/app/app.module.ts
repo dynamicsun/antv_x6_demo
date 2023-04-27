@@ -9,6 +9,8 @@ import {
   StationStructureShapesComponent,
   ShapeDefinitionDirective,
 } from './station-structure-shapes';
+import { ApiModule } from './api/api.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,12 @@ import {
     StationStructureShapesComponent,
     ShapeDefinitionDirective,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    ApiModule.forRoot({ rootUrl: '/assets/data' }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

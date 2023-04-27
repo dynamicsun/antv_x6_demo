@@ -1,0 +1,107 @@
+{
+  "title": "Объект 406/19-АМ",
+  "sources": {
+    "src-1": {
+      "title": "Источник 1"
+    },
+    "src-2": {
+      "title": "Источник 2"
+    }
+  },
+  "targets": {
+    "consumer-1": {
+      "title": "Потребитель 1",
+      "input": {
+        "obj": "sep-1",
+        "port": "product1"
+      }
+    },
+    "consumer-2": {
+      "title": "Потребитель 2",
+      "input": {
+        "obj": "sep-1",
+        "port": "product2"
+      }
+    }
+  },
+  "nodes": {
+    "pump": {
+      "title": "Насосная установка",
+      "type": "pump-3i-1o",
+      "inputs": {
+        "i1": {
+          "obj": "src-1"
+        },
+        "i2": {
+          "obj": "src-2"
+        },
+        "i3": {
+          "obj": "tank-2",
+          "port": "main"
+        }
+      }
+    },
+    "tank-1": {
+      "title": "Резервуар К-4",
+      "type": "tank-1i-1o",
+      "inputs": {
+        "i1": {
+          "obj": "sep-1",
+          "port": "remains"
+        }
+      }
+    },
+    "tank-2": {
+      "title": "Резервуар К-4",
+      "type": "tank-1i-1o",
+      "inputs": {
+        "i1": {
+          "obj": "tank-1"
+        }
+      }
+    },
+    "sep-1": {
+      "title": "Сепаратор С-8",
+      "type": "sep-1i-2o-1rem",
+      "inputs": {
+        "i1": {
+          "obj": "pump"
+        }
+      }
+    }
+  },
+  "layout": {
+    "src-1": {
+      "x": 210,
+      "y": 160
+    },
+    "src-2": {
+      "x": 210,
+      "y": 260
+    },
+    "consumer-1": {
+      "x": 1170,
+      "y": 160
+    },
+    "consumer-2": {
+      "x": 1170,
+      "y": 320
+    },
+    "pump": {
+      "x": 440,
+      "y": 170
+    },
+    "tank-1": {
+      "x": 790,
+      "y": 400
+    },
+    "tank-2": {
+      "x": 400,
+      "y": 400
+    },
+    "sep-1": {
+      "x": 790,
+      "y": 120
+    }
+  }
+}

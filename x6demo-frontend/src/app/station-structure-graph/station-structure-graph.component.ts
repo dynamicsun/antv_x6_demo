@@ -3,79 +3,23 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  OnDestroy,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { Graph, Edge, Shape } from '@antv/x6';
-
-interface SourceRef {
-  obj: string;
-  port?: string;
-}
+import { ActivatedRoute } from '@angular/router';
+import { Graph, Edge } from '@antv/x6';
+import { Subscription, map, switchMap } from 'rxjs';
+import { StationsService } from '../api/services';
+import { SourceReference, StationStructureModel } from '../api/models';
 
 type Dict<T> = { [id in string]: T };
-interface StationStructure {
-  title: string;
-  sources: Dict<{ title: string }>;
-  targets: Dict<{ title: string; input: SourceRef }>;
-  nodes: Dict<{ title: string; type: string; inputs: Dict<SourceRef> }>;
-  layout?: Dict<{ x: number; y: number }>;
-}
-
-const stationStructure: StationStructure = {
-  title: 'Объект 406/19-АМ',
-  sources: {
-    ['src-1']: { title: 'Источник 1' },
-    ['src-2']: { title: 'Источник 2' },
-  },
-  targets: {
-    ['consumer-1']: {
-      title: 'Потребитель 1',
-      input: { obj: 'sep-1', port: 'product1' },
-    },
-    ['consumer-2']: {
-      title: 'Потребитель 2',
-      input: { obj: 'sep-1', port: 'product2' },
-    },
-  },
-  nodes: {
-    pump: {
-      title: 'Насосная установка',
-      type: 'pump-3i-1o',
-      inputs: {
-        i1: { obj: 'src-1' },
-        i2: { obj: 'src-2' },
-        i3: { obj: 'tank', port: 'main' },
-      },
-    },
-    tank: {
-      title: 'Резервуар К-4',
-      type: 'tank-1i-1o',
-      inputs: { i1: { obj: 'sep-1', port: 'remains' } },
-    },
-    ['sep-1']: {
-      title: 'Сепаратор С-8',
-      type: 'sep-1i-2o-1rem',
-      inputs: {
-        i1: { obj: 'pump' },
-      },
-    },
-  },
-  layout: {
-    ['src-1']: { x: 210, y: 160 },
-    ['src-2']: { x: 210, y: 260 },
-    ['consumer-1']: { x: 1170, y: 160 },
-    ['consumer-2']: { x: 1170, y: 320 },
-    ['pump']: { x: 440, y: 170 },
-    ['tank']: { x: 990, y: 370 },
-    ['sep-1']: { x: 790, y: 120 },
-  },
-};
 class StructureScheme {
   private _layout!: Dict<{ x: number; y: number }>;
   constructor(private readonly graph: Graph) {}
   readonly _edges: Edge.Metadata[] = [];
-  setup(stationStructure: StationStructure) {
+  setup(stationStructure: StationStructureModel) {
+    this.graph.model.clear();
     this._layout = stationStructure.layout || {};
     Object.entries(stationStructure.sources).forEach(([id, value]) =>
       this._add({ id, type: 'source', ...value, inputs: {} })
@@ -93,7 +37,7 @@ class StructureScheme {
     id: string;
     title: string;
     type: string;
-    inputs: Dict<SourceRef>;
+    inputs: Dict<SourceReference>;
   }) {
     this.graph.addNode({
       id: conf.id,
@@ -118,7 +62,17 @@ class StructureScheme {
   styleUrls: ['./station-structure-graph.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StationStructureGraphComponent implements AfterViewInit {
+export class StationStructureGraphComponent
+  implements AfterViewInit, OnDestroy
+{
+  private readonly _$subscription = new Subscription();
+  constructor(
+    private readonly activatedRoute: ActivatedRoute,
+    private readonly apiService: StationsService
+  ) {}
+  ngOnDestroy(): void {
+    this._$subscription.unsubscribe();
+  }
   @ViewChild('graphContainer', { static: true })
   graphContainerRef!: ElementRef<HTMLDivElement>;
 
@@ -133,9 +87,28 @@ export class StationStructureGraphComponent implements AfterViewInit {
       },
       background: { color: 'black' },
     });
+
     const scheme = new StructureScheme(graph);
-    scheme.setup(stationStructure);
     (window as any).dumpLayout = () =>
-      graph.getNodes().map((x) => ({ id: x.id, ...x.getPosition() }));
+      JSON.stringify(
+        graph.getNodes().reduce(
+          (acc, node) => ({
+            ...acc,
+            [node.id]: node.getPosition(),
+          }),
+          {} as { [id: string]: { x: number; y: number } }
+        )
+      );
+
+    this._$subscription.add(
+      this.activatedRoute.params
+        .pipe(
+          map((x) => +x['stationId']),
+          switchMap((stationId) => this.apiService.getStructure({ stationId }))
+        )
+        .subscribe((x) => {
+          scheme.setup(x);
+        })
+    );
   }
 }

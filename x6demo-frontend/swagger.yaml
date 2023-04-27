@@ -1,0 +1,134 @@
+version: 3.1.0
+info:
+  title: Stations API
+  version: V1
+paths:
+  '/api/station/{stationId}/structure':
+    get:
+      tags:
+        - Stations
+      operationId: getStationStructure
+      x-operation-name: getStructure
+      parameters:
+        - name: stationId
+          in: path
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StationStructureModel'
+  '/api/stations':
+    get:
+      tags:
+        - Stations
+      operationId: getStationsList
+      x-operation-name: list
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StationListItem'
+components:
+  schemas:
+    StationListItem:
+      additionalProperties: false
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: integer
+          format: int32
+        title:
+          type: string
+    SourceReference:
+      additionalProperties: false
+      required:
+        - obj
+      properties:
+        obj:
+          type: string
+        port:
+          type: string
+    StationStructureSourceModel:
+      type: object
+      additionalProperties: false
+      required:
+        - title
+      properties:
+        title:
+          type: string
+    StationStructureTargetModel:
+      type: object
+      additionalProperties: false
+      required:
+        - title
+        - input
+      properties:
+        title:
+          type: string
+        input:
+          $ref: '#/components/schemas/SourceReference'
+    Point:
+      type: object
+      required:
+        - x
+        - y
+      additionalProperties: false
+      properties:
+        x:
+          type: integer
+          format: int32
+        y:
+          type: integer
+          format: int32
+    StationStructureNodeModel:
+      type: object
+      required:
+        - title
+        - type
+        - inputs
+      properties:
+        title:
+          type: string
+        type:
+          type: string
+        inputs:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/SourceReference'
+    StationStructureModel:
+      additionalProperties: false
+      required:
+        - title
+        - sources
+        - targets
+        - nodes
+      type: object
+      properties:
+        title:
+          type: string
+        sources:
+          type: object
+          additionalProperties: 
+            $ref: '#/components/schemas/StationStructureSourceModel'
+        targets:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/StationStructureTargetModel'
+        nodes:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/StationStructureNodeModel'
+        layout:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Point'
+
