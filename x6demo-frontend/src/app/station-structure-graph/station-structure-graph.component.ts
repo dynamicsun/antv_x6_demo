@@ -1,14 +1,12 @@
 import {
-  AfterContentInit,
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  Injector,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
-import { Graph, Edge } from '@antv/x6';
+import { Graph, Edge, Shape } from '@antv/x6';
 
 interface SourceRef {
   obj: string;
@@ -21,6 +19,7 @@ interface StationStructure {
   sources: Dict<{ title: string }>;
   targets: Dict<{ title: string; input: SourceRef }>;
   nodes: Dict<{ title: string; type: string; inputs: Dict<SourceRef> }>;
+  layout?: Dict<{ x: number; y: number }>;
 }
 
 const stationStructure: StationStructure = {
@@ -46,7 +45,7 @@ const stationStructure: StationStructure = {
       inputs: {
         i1: { obj: 'src-1' },
         i2: { obj: 'src-2' },
-        i3: { obj: 'tank', port: 'p1' },
+        i3: { obj: 'tank', port: 'main' },
       },
     },
     tank: {
@@ -62,11 +61,22 @@ const stationStructure: StationStructure = {
       },
     },
   },
+  layout: {
+    ['src-1']: { x: 210, y: 160 },
+    ['src-2']: { x: 210, y: 250 },
+    ['consumer-1']: { x: 1000, y: 320 },
+    ['consumer-2']: { x: 1000, y: 160 },
+    ['pump']: { x: 360, y: 230 },
+    ['tank']: { x: 780, y: 360 },
+    ['sep-1']: { x: 780, y: 230 },
+  },
 };
 class StructureScheme {
+  private _layout!: Dict<{ x: number; y: number }>;
   constructor(private readonly graph: Graph) {}
   readonly _edges: Edge.Metadata[] = [];
   setup(stationStructure: StationStructure) {
+    this._layout = stationStructure.layout || {};
     Object.entries(stationStructure.sources).forEach(([id, value]) =>
       this._add({ id, type: 'source', ...value, inputs: {} })
     );
@@ -90,6 +100,7 @@ class StructureScheme {
       // label: conf.title, // Напрямую не используется. Может пригодиться для тултипов
       shape: 'station-structure-' + conf.type,
       data: { ngArguments: { conf } },
+      ...this._layout[conf.id],
     });
     this._edges.push(
       ...Object.entries(conf.inputs).map(([key, sr]) => ({
@@ -114,39 +125,17 @@ export class StationStructureGraphComponent implements AfterViewInit {
   @ViewChild('customNodeTemplate', { static: true })
   customNodeTemplateRef!: TemplateRef<any>;
   ngAfterViewInit(): void {
-    console.log('initialization');
     const graph = new Graph({
       container: this.graphContainerRef.nativeElement,
       grid: true,
-      connecting: { router: 'orth' },
+      connecting: { 
+        router: 'manhattan',
+      },
+      background:{color:'black'},
     });
     const scheme = new StructureScheme(graph);
     scheme.setup(stationStructure);
-
-    const source = graph.addNode({
-      // x: 300,
-      // y: 40,
-      // width: 80,
-      // height: 40,
-      label: 'Hello',
-      // shape: SHAPE,
-      data: { ngArguments: { value: 19.78 } },
-    });
-
-    const target = graph.addNode({
-      // x: 420,
-      // y: 180,
-      width: 80,
-      height: 40,
-      ports: [{ id: 'p-1' }],
-      label: 'World',
-    });
-
-    graph.addEdge({
-      source: source,
-      target,
-      sourcePort: 'p-1',
-      targetPort: 'p-1',
-    });
+    (window as any).dumpLayout = () =>
+      graph.getNodes().map((x) => ({ id: x.id, ...x.getPosition() }));
   }
 }

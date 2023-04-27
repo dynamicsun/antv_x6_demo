@@ -1,8 +1,12 @@
 import { register } from '@antv/x6-angular-shape';
+import { PortManager } from '@antv/x6/lib/model/port';
 import { Directive, Injector, Input, OnInit, TemplateRef } from '@angular/core';
 
 export interface ShapeDefinitionConf {
   shape: string;
+  width: number;
+  height: number;
+  ports?: PortManager.PortMetadata[] | PortManager.Metadata;
 }
 
 @Directive({
