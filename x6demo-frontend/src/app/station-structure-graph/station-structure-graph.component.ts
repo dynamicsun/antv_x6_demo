@@ -8,7 +8,13 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Graph, Edge } from '@antv/x6';
-import { Subscription, map, switchMap } from 'rxjs';
+import {
+  NEVER,
+  Subscription,
+  map,
+  switchMap,
+  using,
+} from 'rxjs';
 import { StationsService } from '../api/services';
 import { SourceReference, StationStructureModel } from '../api/models';
 
@@ -54,6 +60,20 @@ class StructureScheme {
     );
   }
 }
+
+function usingGraph(factory: () => Graph) {
+  return using(
+    () => {
+      const graph = factory();
+      return {
+        unsubscribe: () => {
+          graph.dispose();
+        },
+      };
+    },
+    () => NEVER
+  );
+}
 @Component({
   selector: 'app-station-structure-graph',
   templateUrl: './station-structure-graph.component.html',
@@ -63,7 +83,6 @@ class StructureScheme {
 export class StationStructureGraphComponent
   implements AfterViewInit, OnDestroy
 {
-  private _graph?: Graph;
   private readonly _$subscription = new Subscription();
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -71,15 +90,15 @@ export class StationStructureGraphComponent
   ) {}
   ngOnDestroy(): void {
     this._$subscription.unsubscribe();
-    this._graph?.dispose();
   }
   @ViewChild('graphContainer', { static: true })
   graphContainerRef!: ElementRef<HTMLDivElement>;
 
   ngAfterViewInit(): void {
+    let lastGraph: Graph;
     (window as any).dumpLayout = () =>
       JSON.stringify(
-        this._graph?.getNodes().reduce(
+        lastGraph?.getNodes().reduce(
           (acc, node) => ({
             ...acc,
             [node.id]: node.getPosition(),
@@ -92,24 +111,26 @@ export class StationStructureGraphComponent
       this.activatedRoute.params
         .pipe(
           map((x) => +x['stationId']),
-          switchMap((stationId) => this.apiService.getStructure({ stationId }))
-        )
-        .subscribe((x) => {
-          if (this._graph) {
-            this._graph.dispose();
-          }
-          this._graph = new Graph({
-            container: this.graphContainerRef.nativeElement,
-            grid: true,
-            connecting: {
-              router: 'manhattan',
-            },
-            background: { color: 'black' },
-          });
+          switchMap((stationId) => this.apiService.getStructure({ stationId })),
+          switchMap((structure) =>
+            usingGraph(() => {
+              const graph = new Graph({
+                container: this.graphContainerRef.nativeElement,
+                grid: true,
+                connecting: {
+                  router: 'manhattan',
+                },
+                background: { color: 'black' },
+              });
 
-          const scheme = new StructureScheme(this._graph);
-          scheme.setup(x);
-        })
+              const scheme = new StructureScheme(graph);
+              scheme.setup(structure);
+              lastGraph = graph;
+              return graph;
+            })
+          )
+        )
+        .subscribe()
     );
   }
 }
