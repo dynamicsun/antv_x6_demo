@@ -39,6 +39,10 @@ $padding: 5px;
 }
 @include sub-svg(".el-tank", ".tank-image");
 @include sub-svg(".el-separator", ".separator-image");
+@include sub-svg(".el-pump", ".pump-image");
 .separator-image {
   margin-top: 30px;
+}
+.pump-label {
+  float: right;
 }

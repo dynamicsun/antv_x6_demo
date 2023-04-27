@@ -63,12 +63,12 @@ const stationStructure: StationStructure = {
   },
   layout: {
     ['src-1']: { x: 210, y: 160 },
-    ['src-2']: { x: 210, y: 250 },
-    ['consumer-1']: { x: 1000, y: 320 },
-    ['consumer-2']: { x: 1000, y: 160 },
-    ['pump']: { x: 360, y: 230 },
-    ['tank']: { x: 780, y: 360 },
-    ['sep-1']: { x: 780, y: 230 },
+    ['src-2']: { x: 210, y: 260 },
+    ['consumer-1']: { x: 1170, y: 160 },
+    ['consumer-2']: { x: 1170, y: 320 },
+    ['pump']: { x: 440, y: 170 },
+    ['tank']: { x: 990, y: 370 },
+    ['sep-1']: { x: 790, y: 120 },
   },
 };
 class StructureScheme {
@@ -128,10 +128,10 @@ export class StationStructureGraphComponent implements AfterViewInit {
     const graph = new Graph({
       container: this.graphContainerRef.nativeElement,
       grid: true,
-      connecting: { 
+      connecting: {
         router: 'manhattan',
       },
-      background:{color:'black'},
+      background: { color: 'black' },
     });
     const scheme = new StructureScheme(graph);
     scheme.setup(stationStructure);

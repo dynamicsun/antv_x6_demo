@@ -10,7 +10,122 @@
     <span class="title">{{ data.conf.title }}</span>
   </div>
 </ng-template>
-<ng-template [appShapeDefinition]="conf.pump3i1o"> Насос </ng-template>
+<ng-template [appShapeDefinition]="conf.pump3i1o" let-data="ngArguments">
+  <div class="el el-pump">
+    <span class="pump-label">{{ data.conf.title }}</span>
+    <svg
+      class="pump-image"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="1.1"
+      width="280px"
+      height="200px"
+      viewBox="-0.5 -0.5 282 201"
+    >
+      <g>
+        <path
+          d="M 106.67 20 L 131 20 L 131 100 L 155.3 100"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 40 20 L 20 20 L 0 20"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 40 0 L 73.34 20 L 40 40 Z M 106.67 0 L 73.34 20 L 106.67 40 Z"
+          fill="rgb(255, 255, 255)"
+          stroke="rgb(0, 0, 0)"
+          stroke-linejoin="round"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 106.67 100 L 131 100 L 155.3 100"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 40 100 L 20 100 L 0 100"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 40 80 L 73.34 100 L 40 120 Z M 106.67 80 L 73.34 100 L 106.67 120 Z"
+          fill="rgb(255, 255, 255)"
+          stroke="rgb(0, 0, 0)"
+          stroke-linejoin="round"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 106.67 180 L 131 180 L 131 100 L 155.3 100"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 40 180 L 20 180 L 0 180"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 40 160 L 73.34 180 L 40 200 Z M 106.67 160 L 73.34 180 L 106.67 200 Z"
+          fill="rgb(0, 0, 0)"
+          stroke="rgb(0, 0, 0)"
+          stroke-linejoin="round"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 249.24 100 L 280 100"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 239.92 85.01 C 242.86 93.49 243.7 102.39 241.42 110.01 M 202.28 146.97 L 202.28 127.89 M 202.28 53.03 L 202.28 72.25 M 230.08 100.03 C 230.08 115.38 217.63 127.83 202.28 127.83 C 186.93 127.83 174.48 115.38 174.48 100.03 C 174.49 84.68 186.93 72.25 202.28 72.25 C 217.63 72.25 230.07 84.68 230.08 100.03 Z M 237.28 64.95 L 160 142.25"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          transform="rotate(90,202.27,100)"
+          pointer-events="all"
+        />
+        <rect
+          x="160"
+          y="53.03"
+          width="0"
+          height="0"
+          fill="none"
+          stroke="rgb(0, 0, 0)"
+          transform="rotate(90,202.27,100)"
+          pointer-events="all"
+        />
+        <path
+          d="M 243.2 110.23 L 238.68 118.03 L 239.54 108.93 Z M 192.38 88.51 L 202.28 72.25 L 212.18 88.47 Z M 234.8 62.85 L 244.54 57.63 L 239.44 67.43 Z"
+          fill="rgb(0, 0, 0)"
+          stroke="rgb(0, 0, 0)"
+          stroke-miterlimit="10"
+          transform="rotate(90,202.27,100)"
+          pointer-events="all"
+        />
+      </g>
+    </svg>
+  </div>
+</ng-template>
 <ng-template [appShapeDefinition]="conf.tank1i1o" let-data="ngArguments">
   <div class="el el-tank">
     {{ data.conf.title }}
@@ -80,7 +195,7 @@
     </svg>
   </div>
 </ng-template>
-<ng-template [appShapeDefinition]="conf.sep1i2o1" let-data="ngArguments">
+<ng-template [appShapeDefinition]="conf.sep1i2o1rem" let-data="ngArguments">
   <div class="el el-separator">
     {{ data.conf.title }}
     <svg

@@ -3,15 +3,23 @@ import { ShapeDefinitionConf } from './shape-definition.directive';
 import { PortManager } from '@antv/x6/lib/model/port';
 
 const c = (v: ShapeDefinitionConf) => v;
-const defSize = {
-  width: 100,
-  height: 180,
-};
 
 const absPortGroup: PortManager.GroupMetadata = {
   position: 'absolute',
-  attrs: { circle: { r: 6 } },
+  attrs: { circle: { r: 3 } },
 };
+function ports(
+  ...items: { id: string; x: string | number; y: string | number }[]
+) {
+  return {
+    groups: { g: absPortGroup },
+    items: items.map((item) => ({
+      id: item.id,
+      args: { x: item.x, y: item.y },
+      group: 'g',
+    })),
+  };
+}
 @Component({
   selector: 'app-station-structure-shapes',
   templateUrl: './station-structure-shapes.component.html',
@@ -24,50 +32,44 @@ export class StationStructureShapesComponent {
       shape: 'station-structure-source',
       width: 120,
       height: 30,
-      ports: {
-        groups: { g: absPortGroup },
-        items: [{ id: 'main', group: 'g', args: { x: '100%', y: '50%' } }],
-      },
+      ports: ports({ id: 'main', x: '100%', y: '50%' }),
     }),
     target: c({
       shape: 'station-structure-target',
       width: 150,
       height: 30,
-      ports: {
-        groups: { g: absPortGroup },
-        items: [{ id: 'i1', group: 'g', args: { x: 0, y: '50%' } }],
-      },
+      ports: ports({ id: 'i1', x: 0, y: '50%' }),
     }),
     pump3i1o: c({
       shape: 'station-structure-pump-3i-1o',
-      ...defSize,
-      ports: [{ id: 'i1' }, { id: 'i2' }, { id: 'i3' }, { id: 'main' }],
+      width: 280,
+      height: 200,
+      ports: ports(
+        { id: 'i1', x: 0, y: '10%' },
+        { id: 'i2', x: 0, y: '50%' },
+        { id: 'i3', x: 0, y: '90%' },
+        { id: 'main', x: '100%', y: '50%' }
+      ),
     }),
     tank1i1o: c({
       shape: 'station-structure-tank-1i-1o',
       width: 320,
       height: 180,
-      ports: {
-        groups: { g: absPortGroup },
-        items: [
-          { id: 'i1', args: { x: 0, y: 165 }, group: 'g' },
-          { id: 'main', args: { x: '100%', y: 165 }, group: 'g' },
-        ],
-      },
+      ports: ports(
+        { id: 'i1', x: 0, y: 165 },
+        { id: 'main', x: '100%', y: 165 }
+      ),
     }),
-    sep1i2o1: c({
+    sep1i2o1rem: c({
       shape: 'station-structure-sep-1i-2o-1rem',
       width: 260,
       height: 200,
-      ports: {
-        groups: { g: absPortGroup },
-        items: [
-          { id: 'i1', group: 'g', args: { x: 0, y: 57 } },
-          { id: 'product1', group: 'g', args: { x: '100%', y: 57 } },
-          { id: 'product2', group: 'g', args: { x: 46, y: '100%' } },
-          { id: 'remains', group: 'g', args: { x: 170, y: '100%' } },
-        ],
-      },
+      ports: ports(
+        { id: 'i1', x: 0, y: 57 },
+        { id: 'product1', x: '100%', y: 57 },
+        { id: 'product2', x: 46, y: '100%' },
+        { id: 'remains', x: 170, y: '100%' }
+      ),
     }),
   };
 }
