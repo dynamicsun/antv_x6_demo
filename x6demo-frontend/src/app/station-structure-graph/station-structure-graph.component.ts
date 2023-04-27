@@ -4,7 +4,6 @@ import {
   Component,
   ElementRef,
   OnDestroy,
-  TemplateRef,
   ViewChild,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -19,7 +18,6 @@ class StructureScheme {
   constructor(private readonly graph: Graph) {}
   readonly _edges: Edge.Metadata[] = [];
   setup(stationStructure: StationStructureModel) {
-    this.graph.model.clear();
     this._layout = stationStructure.layout || {};
     Object.entries(stationStructure.sources).forEach(([id, value]) =>
       this._add({ id, type: 'source', ...value, inputs: {} })
@@ -65,6 +63,7 @@ class StructureScheme {
 export class StationStructureGraphComponent
   implements AfterViewInit, OnDestroy
 {
+  private _graph?: Graph;
   private readonly _$subscription = new Subscription();
   constructor(
     private readonly activatedRoute: ActivatedRoute,
@@ -72,26 +71,15 @@ export class StationStructureGraphComponent
   ) {}
   ngOnDestroy(): void {
     this._$subscription.unsubscribe();
+    this._graph?.dispose();
   }
   @ViewChild('graphContainer', { static: true })
   graphContainerRef!: ElementRef<HTMLDivElement>;
 
-  @ViewChild('customNodeTemplate', { static: true })
-  customNodeTemplateRef!: TemplateRef<any>;
   ngAfterViewInit(): void {
-    const graph = new Graph({
-      container: this.graphContainerRef.nativeElement,
-      grid: true,
-      connecting: {
-        router: 'manhattan',
-      },
-      background: { color: 'black' },
-    });
-
-    const scheme = new StructureScheme(graph);
     (window as any).dumpLayout = () =>
       JSON.stringify(
-        graph.getNodes().reduce(
+        this._graph?.getNodes().reduce(
           (acc, node) => ({
             ...acc,
             [node.id]: node.getPosition(),
@@ -107,6 +95,19 @@ export class StationStructureGraphComponent
           switchMap((stationId) => this.apiService.getStructure({ stationId }))
         )
         .subscribe((x) => {
+          if (this._graph) {
+            this._graph.dispose();
+          }
+          this._graph = new Graph({
+            container: this.graphContainerRef.nativeElement,
+            grid: true,
+            connecting: {
+              router: 'manhattan',
+            },
+            background: { color: 'black' },
+          });
+
+          const scheme = new StructureScheme(this._graph);
           scheme.setup(x);
         })
     );
