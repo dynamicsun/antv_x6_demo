@@ -1,0 +1,29 @@
+:host {
+  flex-grow: 1;
+  height: 10px;
+  padding: 30px;
+  position: relative;
+  display: flex;
+}
+.bg-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 0.2;
+  background-image: url(/assets/demo-image.png);
+  background-size: cover;
+}
+.alert {
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 3rem;
+  background: #140000;
+  color: darkgray;
+  z-index: 0;
+  padding: 2rem;
+  border-radius: 10px;
+  border: 4px green solid;
+}

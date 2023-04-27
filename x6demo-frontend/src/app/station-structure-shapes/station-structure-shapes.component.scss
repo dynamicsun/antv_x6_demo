@@ -11,19 +11,21 @@ $padding: 5px;
     vertical-align: top;
   }
 }
+.el {
+    color: wheat;
+}
 
 .el-source {
-  color: wheat;
   background: darkblue;
 }
 .el-target {
-  color: #dfa;
   background: #294;
 }
 
 @mixin sub-svg($elSelector, $imageSelector) {
   #{$elSelector} {
     position: relative;
+    color: black;
     background-color: wheat;
     #{$imageSelector} {
       position: absolute;

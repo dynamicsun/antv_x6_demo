@@ -1,0 +1,35 @@
+@mixin round-bottom() {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+.header-container {
+  background: #999;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  gap: 1rem;
+  font-size: 1rem;
+
+  @include round-bottom();
+}
+a {
+  text-transform: uppercase;
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+
+  padding-top: 1rem;
+  padding-bottom: 0.25rem;
+
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+
+  @include round-bottom();
+
+  &.active {
+    background-color: #ff5f00;
+  }
+  &:hover {
+    background-color: #0e51a7;
+  }
+}

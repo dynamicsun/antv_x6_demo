@@ -11,6 +11,7 @@ import {
 } from './station-structure-shapes';
 import { ApiModule } from './api/api.module';
 import { HttpClientModule } from '@angular/common/http';
+import { EmptyPageComponent } from './empty-page/empty-page.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     StationStructureShapesComponent,
     ShapeDefinitionDirective,
+    EmptyPageComponent,
   ],
   imports: [
     BrowserModule,

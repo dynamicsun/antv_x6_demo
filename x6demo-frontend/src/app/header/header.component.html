@@ -1,7 +1,8 @@
-<div>
+<div class="header-container">
   <a
     *ngFor="let station of stations$ | async"
     [routerLink]="['stations', station.id]"
+    routerLinkActive="active"
     >{{ station.title }}</a
   >
 </div>

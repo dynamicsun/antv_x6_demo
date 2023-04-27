@@ -30,7 +30,7 @@ export class StationStructureShapesComponent {
   readonly conf = {
     source: c({
       shape: 'station-structure-source',
-      width: 120,
+      width: 140,
       height: 30,
       ports: ports({ id: 'main', x: '100%', y: '50%' }),
     }),
