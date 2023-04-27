@@ -8,13 +8,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Graph, Edge } from '@antv/x6';
-import {
-  NEVER,
-  Subscription,
-  map,
-  switchMap,
-  using,
-} from 'rxjs';
+import { NEVER, Subscription, map, switchMap, using } from 'rxjs';
 import { StationsService } from '../api/services';
 import { SourceReference, StationStructureModel } from '../api/models';
 
@@ -120,6 +114,8 @@ export class StationStructureGraphComponent
                 connecting: {
                   router: 'manhattan',
                 },
+                panning: { enabled: true },
+                mousewheel: { enabled: true },
                 background: { color: 'black' },
               });
 
