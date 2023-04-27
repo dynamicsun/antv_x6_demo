@@ -1,10 +1,83 @@
 <ng-template [appShapeDefinition]="conf.source" let-data="ngArguments">
-  <div class="el-source">
-    <span class="title">{{ data.conf.title }}</span
-    >⚡
+  <div class="el el-source">
+    ⚡
+    <span class="title">{{ data.conf.title }}</span>
   </div>
 </ng-template>
-<ng-template [appShapeDefinition]="conf.target"> Потребитель </ng-template>
+<ng-template [appShapeDefinition]="conf.target" let-data="ngArguments">
+  <div class="el el-target">
+    🛢️
+    <span class="title">{{ data.conf.title }}</span>
+  </div>
+</ng-template>
 <ng-template [appShapeDefinition]="conf.pump3i1o"> Насос </ng-template>
-<ng-template [appShapeDefinition]="conf.tank1i1o"> Резервуар </ng-template>
+<ng-template [appShapeDefinition]="conf.tank1i1o" let-data="ngArguments">
+  <div class="el el-tank">
+    {{ data.conf.title }}
+    <svg
+      class="tank-image"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      version="1.1"
+      width="320px"
+      height="180px"
+      viewBox="-0.5 -0.5 322 182"
+    >
+      <defs />
+      <g>
+        <path
+          d="M 134 20 C 134 8.95 145.19 0 159 0 C 172.81 0 184 8.95 184 20 L 184 110 C 184 121.05 172.81 130 159 130 C 145.19 130 134 121.05 134 110 Z M 159 130 L 159 150"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 70 150 L 95 165 L 70 180 Z M 120 150 L 95 165 L 120 180 Z"
+          stroke-linejoin="round"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 200 150 L 225 165 L 200 180 Z M 250 150 L 225 165 L 250 180 Z"
+          stroke-linejoin="round"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 0 150 L 0 180 M 50 150 L 50 180 M 2.5 151.5 L 47.5 178.5"
+          stroke-linejoin="round"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 44.63 174.45 L 47.85 178.65 L 42.5 177.84 Z"
+          stroke-linejoin="round"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 270 150 L 270 180 M 320 150 L 320 180 M 272.5 151.5 L 317.5 178.5"
+          stroke-linejoin="round"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 314.63 174.45 L 317.85 178.65 L 312.5 177.84 Z"
+          stroke-linejoin="round"
+          stroke-miterlimit="10"
+          pointer-events="all"
+        />
+        <path
+          d="M 159 150 L 159.03 165 L 0.9 165"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+        <path
+          d="M 159.03 150 L 159.03 165 L 320 165 L 320 164"
+          stroke-miterlimit="10"
+          pointer-events="stroke"
+        />
+      </g>
+    </svg>
+  </div>
+</ng-template>
 <ng-template [appShapeDefinition]="conf.sep1i2o1"> Сепаратор </ng-template>

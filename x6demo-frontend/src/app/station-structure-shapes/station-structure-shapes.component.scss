@@ -1,11 +1,37 @@
-.el-source {
-  color: wheat;
+$padding: 5px;
+.el {
   display: inline-block;
   width: 100%;
   height: 100%;
-  background: darkblue;
   border: yellow 1px solid;
   border-radius: 5px;
-  padding: 5px;
+  padding: $padding;
   box-sizing: border-box;
+  .title {
+    vertical-align: top;
+  }
+}
+
+.el-source {
+  color: wheat;
+  background: darkblue;
+}
+.el-target {
+  color: #dfa;
+  background: #294;
+}
+
+.el-tank {
+  position: relative;
+  background-color: wheat;
+  .tank-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    path {
+      fill: none;
+      stroke: black;
+      stroke-width: 2px;
+    }
+  }
 }
