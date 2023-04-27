@@ -13,11 +13,11 @@
   </div>
 </ng-template>
 <ng-template [appShapeDefinition]="conf.pump3i1o" let-data="ngArguments">
-  <div class="el el-pump">
+  <div class="el el-svg-container">
     <span class="chart-button" (click)="handleView(data)"></span>
     <span class="pump-label">{{ data.conf.title }}</span>
     <svg
-      class="pump-image"
+      class="el-svg-image"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       version="1.1"
@@ -130,11 +130,11 @@
   </div>
 </ng-template>
 <ng-template [appShapeDefinition]="conf.tank1i1o" let-data="ngArguments">
-  <div class="el el-tank">
+  <div class="el el-svg-container">
     <span class="chart-button" (click)="handleView(data)"></span>
     {{ data.conf.title }}
     <svg
-      class="tank-image"
+      class="el-svg-image"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       version="1.1"
@@ -200,11 +200,11 @@
   </div>
 </ng-template>
 <ng-template [appShapeDefinition]="conf.sep1i2o1rem" let-data="ngArguments">
-  <div class="el el-separator">
+  <div class="el el-svg-container">
     <span class="chart-button" (click)="handleView(data)"></span>
     {{ data.conf.title }}
     <svg
-      class="separator-image"
+      class="el-svg-image separator-image"
       xmlns="http://www.w3.org/2000/svg"
       xmlns:xlink="http://www.w3.org/1999/xlink"
       version="1.1"

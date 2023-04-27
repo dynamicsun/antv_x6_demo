@@ -36,7 +36,7 @@ export class StationStructureShapesComponent {
     }),
     target: c({
       shape: 'station-structure-target',
-      width: 160,
+      width: 170,
       height: 30,
       ports: ports({ id: 'i1', x: 0, y: '50%' }),
     }),
