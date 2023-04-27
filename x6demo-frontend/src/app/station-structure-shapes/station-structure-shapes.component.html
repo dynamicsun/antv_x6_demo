@@ -1,0 +1,9 @@
+<ng-template #customNodeTemplate let-data="ngArguments">
+  CustomNodeTemplate <span class="cnt">Colored: {{ data.value }}</span>
+</ng-template>
+
+<ng-template [appShapeDefinition]="conf.source"> Источник </ng-template>
+<ng-template [appShapeDefinition]="conf.target"> Потребитель </ng-template>
+<ng-template [appShapeDefinition]="conf.pump3i1o"> Насос </ng-template>
+<ng-template [appShapeDefinition]="conf.tank1i1o"> Резервуар </ng-template>
+<ng-template [appShapeDefinition]="conf.sep1i2o1"> Сепаратор </ng-template>
