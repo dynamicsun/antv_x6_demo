@@ -1,17 +1,20 @@
 <ng-template [appShapeDefinition]="conf.source" let-data="ngArguments">
   <div class="el el-source">
+    <span class="chart-button" (click)="handleView(data)"></span>
     ⚡
     <span class="title">{{ data.conf.title }}</span>
   </div>
 </ng-template>
 <ng-template [appShapeDefinition]="conf.target" let-data="ngArguments">
   <div class="el el-target">
+    <span class="chart-button" (click)="handleView(data)"></span>
     🛢️
     <span class="title">{{ data.conf.title }}</span>
   </div>
 </ng-template>
 <ng-template [appShapeDefinition]="conf.pump3i1o" let-data="ngArguments">
   <div class="el el-pump">
+    <span class="chart-button" (click)="handleView(data)"></span>
     <span class="pump-label">{{ data.conf.title }}</span>
     <svg
       class="pump-image"
@@ -128,6 +131,7 @@
 </ng-template>
 <ng-template [appShapeDefinition]="conf.tank1i1o" let-data="ngArguments">
   <div class="el el-tank">
+    <span class="chart-button" (click)="handleView(data)"></span>
     {{ data.conf.title }}
     <svg
       class="tank-image"
@@ -197,6 +201,7 @@
 </ng-template>
 <ng-template [appShapeDefinition]="conf.sep1i2o1rem" let-data="ngArguments">
   <div class="el el-separator">
+    <span class="chart-button" (click)="handleView(data)"></span>
     {{ data.conf.title }}
     <svg
       class="separator-image"

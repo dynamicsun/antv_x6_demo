@@ -30,13 +30,13 @@ export class StationStructureShapesComponent {
   readonly conf = {
     source: c({
       shape: 'station-structure-source',
-      width: 140,
+      width: 160,
       height: 30,
       ports: ports({ id: 'main', x: '100%', y: '50%' }),
     }),
     target: c({
       shape: 'station-structure-target',
-      width: 150,
+      width: 160,
       height: 30,
       ports: ports({ id: 'i1', x: 0, y: '50%' }),
     }),
@@ -72,4 +72,8 @@ export class StationStructureShapesComponent {
       ),
     }),
   };
+
+  handleView(el: any) {
+    console.log(el);
+  }
 }

@@ -10,9 +10,8 @@ $padding: 5px;
   .title {
     vertical-align: top;
   }
-}
-.el {
-    color: wheat;
+  color: wheat;
+  position: relative;
 }
 
 .el-source {
@@ -24,7 +23,6 @@ $padding: 5px;
 
 @mixin sub-svg($elSelector, $imageSelector) {
   #{$elSelector} {
-    position: relative;
     color: black;
     background-color: wheat;
     #{$imageSelector} {
@@ -47,4 +45,15 @@ $padding: 5px;
 }
 .pump-label {
   float: right;
+  margin-right: 2rem;
+}
+
+.chart-button {
+  cursor: pointer;
+  position: absolute;
+  right: 5px;
+  &:after {
+    content: "👁️‍🗨️";
+  }
+  z-index: 1;
 }
