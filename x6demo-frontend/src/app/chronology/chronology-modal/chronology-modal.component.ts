@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { EChartsOption } from 'echarts';
 import { Observable, map, shareReplay } from 'rxjs';
@@ -30,13 +25,10 @@ function buildChartOptions(data: NodeLoadingTimeline): EChartsOption {
     },
     series: [
       {
-        data: [
-          ['2022-11-10', 820],
-          ['2022-11-11', 830],
-          ['2022-11-12', 840],
-          // 820, 932, 901, 934, 1290, 1330, 1320
-        ],
+        tooltip: { show: true },
+        data: data.points.map((p) => [p.t, p.v]),
         type: 'line',
+        smooth: true,
       },
     ],
   };
