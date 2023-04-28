@@ -21,4 +21,5 @@ $theme: mat.define-dark-theme(
   @include mat.core();
   @include mat.dialog-theme($theme);
   @include mat.button-theme($theme);
+  @include mat.progress-spinner-theme($theme);
 }

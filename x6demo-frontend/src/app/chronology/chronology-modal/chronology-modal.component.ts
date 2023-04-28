@@ -4,6 +4,7 @@ import { EChartsOption } from 'echarts';
 import { Observable, map, shareReplay } from 'rxjs';
 import { NodeLoadingTimeline } from 'src/app/api/models';
 import { StationsService } from 'src/app/api/services';
+import { LoadingSubject } from './loading-subject';
 
 function buildChartOptions(data: NodeLoadingTimeline): EChartsOption {
   return {
@@ -44,6 +45,7 @@ export class ChronologyModalComponent {
   static readonly config: Partial<MatDialogConfig<unknown>> = {
     width: '160vw',
   };
+  readonly loading$ = new LoadingSubject();
   readonly data$: Observable<NodeLoadingTimeline>;
   readonly chartOptions$: Observable<EChartsOption>;
 
@@ -57,7 +59,7 @@ export class ChronologyModalComponent {
   ) {
     this.data$ = this.apiService
       .getNodeLoading(this.handler)
-      .pipe(shareReplay(1));
+      .pipe(this.loading$.wrap(), shareReplay(1));
     this.chartOptions$ = this.data$.pipe(map(buildChartOptions));
   }
 }

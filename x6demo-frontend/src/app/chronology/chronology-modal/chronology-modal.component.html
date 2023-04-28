@@ -5,7 +5,8 @@
     }}"
   </ng-container>
 </h1>
-<div mat-dialog-content>
+<div mat-dialog-content class="dialog-content">
+  <mat-spinner color="primary" *ngIf="loading$ | async"></mat-spinner>
   <div echarts [options]="chartOptions$ | async"></div>
 </div>
 <div mat-dialog-actions>
