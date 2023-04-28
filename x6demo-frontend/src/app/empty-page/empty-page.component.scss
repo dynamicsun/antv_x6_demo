@@ -26,4 +26,15 @@
   padding: 2rem;
   border-radius: 10px;
   border: 4px green solid;
+  animation-name: alert-enter;
+  animation-duration: 2s;
+}
+
+@keyframes alert-enter {
+  from {
+    scale: 0.1;
+  }
+  to {
+    scale: none;
+  }
 }

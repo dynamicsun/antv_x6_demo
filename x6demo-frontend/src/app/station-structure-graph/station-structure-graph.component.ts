@@ -8,11 +8,12 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Graph, Edge } from '@antv/x6';
-import { NEVER, Subscription, map, switchMap, using } from 'rxjs';
+import { NEVER, Subscription, map, switchMap, tap, using } from 'rxjs';
 import { StationsService } from '../api/services';
 import { SourceReference, StationStructureModel } from '../api/models';
 import { MatDialog } from '@angular/material/dialog';
 import { ChronologyModalComponent } from '../chronology';
+import { Title } from '@angular/platform-browser';
 
 type Dict<T> = { [id in string]: T };
 interface NodeNgArguments {
@@ -88,7 +89,8 @@ export class StationStructureGraphComponent
   constructor(
     private readonly activatedRoute: ActivatedRoute,
     private readonly apiService: StationsService,
-    private readonly dialogService: MatDialog
+    private readonly dialogService: MatDialog,
+    private readonly title: Title
   ) {}
   ngOnDestroy(): void {
     this._$subscription.unsubscribe();
@@ -114,6 +116,7 @@ export class StationStructureGraphComponent
         .pipe(
           map(getStationId),
           switchMap((stationId) => this.apiService.getStructure({ stationId })),
+          tap((structure) => this.title.setTitle(structure.title)),
           switchMap((structure) =>
             usingGraph(() => {
               const graph = new Graph({
