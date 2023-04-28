@@ -1,7 +1,12 @@
-<h1 mat-dialog-title>График загруженности объекта</h1>
+<h1 mat-dialog-title>
+  <ng-container *ngIf="data$ | async as data">
+    График загруженности узла "{{ data.nodeTitle }}" объекта "{{
+      data.stationTitle
+    }}"
+  </ng-container>
+</h1>
 <div mat-dialog-content>
-  <div echarts [options]="chartOptions"></div>
-  {{handler | json}}
+  <div echarts [options]="chartOptions$ | async"></div>
 </div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Закрыть</button>

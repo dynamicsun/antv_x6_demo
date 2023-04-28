@@ -16,7 +16,7 @@ import { ChronologyModalComponent } from '../chronology';
 
 type Dict<T> = { [id in string]: T };
 interface NodeNgArguments {
-  conf: { title: string, id: string };
+  conf: { title: string; id: string };
 }
 class StructureScheme {
   private _layout!: Dict<{ x: number; y: number }>;
@@ -72,7 +72,7 @@ function usingGraph(factory: () => Graph) {
     () => NEVER
   );
 }
-function getStationId(params: Params){
+function getStationId(params: Params) {
   return +params['stationId'];
 }
 @Component({
@@ -141,11 +141,9 @@ export class StationStructureGraphComponent
     this.dialogService.open(ChronologyModalComponent, {
       ...ChronologyModalComponent.config,
       data: {
-        handler:{
-          stationId: getStationId(this.activatedRoute.snapshot.params),
-          nodeId: evt.conf.id,
-        },
-      }
+        stationId: getStationId(this.activatedRoute.snapshot.params),
+        nodeId: evt.conf.id,
+      },
     });
   }
 }

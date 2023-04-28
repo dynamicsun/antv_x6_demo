@@ -5,3 +5,5 @@ export { StationStructureTargetModel } from './models/station-structure-target-m
 export { Point } from './models/point';
 export { StationStructureNodeModel } from './models/station-structure-node-model';
 export { StationStructureModel } from './models/station-structure-model';
+export { NodeLoadingTimelinePoint } from './models/node-loading-timeline-point';
+export { NodeLoadingTimeline } from './models/node-loading-timeline';

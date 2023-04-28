@@ -21,6 +21,28 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StationStructureModel'
+  '/api/station/{stationId}/node/{nodeId}/loading':
+    get:
+      tags:
+        - Stations
+      opertionId: getStationNodeLoading
+      x-operation-name: getNodeLoading
+      parameters:
+        - name: stationId
+          in: path
+          schema:
+            type: integer
+            format: int32
+        - name: nodeId
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NodeLoadingTimeline'
   '/api/stations':
     get:
       tags:
@@ -131,4 +153,32 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/Point'
-
+    NodeLoadingTimelinePoint:
+      type: object
+      additionalProperties: false
+      required:
+        - t
+        - v
+      properties:
+        t:
+          type: string
+          format: date-time
+        v:
+          type: number
+          format: float
+    NodeLoadingTimeline:
+      additionalProperties: false
+      type: object
+      required:
+        - stationTitle
+        - nodeTitle
+        - points
+      properties:
+        stationTitle:
+          type: string
+        nodeTitle:
+          type: string
+        points:
+          type: array
+          items:
+            $ref: '#/components/schemas/NodeLoadingTimelinePoint'

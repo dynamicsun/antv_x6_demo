@@ -6,24 +6,12 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { EChartsOption } from 'echarts';
+import { Observable, map, shareReplay } from 'rxjs';
+import { NodeLoadingTimeline } from 'src/app/api/models';
+import { StationsService } from 'src/app/api/services';
 
-@Component({
-  templateUrl: './chronology-modal.component.html',
-  styleUrls: ['./chronology-modal.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export class ChronologyModalComponent implements OnInit {
-  static readonly config: Partial<MatDialogConfig<unknown>> = {
-    width: '160vw',
-  };
-  constructor(
-    @Inject(MAT_DIALOG_DATA)
-    public readonly handler?: {
-      readonly stationId: number;
-      readonly nodeId: string;
-    }
-  ) {}
-  readonly chartOptions: EChartsOption = {
+function buildChartOptions(data: NodeLoadingTimeline): EChartsOption {
+  return {
     xAxis: {
       type: 'time',
       axisLabel: { color: 'white' },
@@ -52,5 +40,31 @@ export class ChronologyModalComponent implements OnInit {
       },
     ],
   };
-  ngOnInit(): void {}
+}
+
+@Component({
+  templateUrl: './chronology-modal.component.html',
+  styleUrls: ['./chronology-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class ChronologyModalComponent {
+  static readonly config: Partial<MatDialogConfig<unknown>> = {
+    width: '160vw',
+  };
+  readonly data$: Observable<NodeLoadingTimeline>;
+  readonly chartOptions$: Observable<EChartsOption>;
+
+  constructor(
+    @Inject(MAT_DIALOG_DATA)
+    public readonly handler: {
+      readonly stationId: number;
+      readonly nodeId: string;
+    },
+    private readonly apiService: StationsService
+  ) {
+    this.data$ = this.apiService
+      .getNodeLoading(this.handler)
+      .pipe(shareReplay(1));
+    this.chartOptions$ = this.data$.pipe(map(buildChartOptions));
+  }
 }

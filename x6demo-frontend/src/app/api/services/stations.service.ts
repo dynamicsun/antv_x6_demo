@@ -9,6 +9,7 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
+import { NodeLoadingTimeline } from '../models/node-loading-timeline';
 import { StationListItem } from '../models/station-list-item';
 import { StationStructureModel } from '../models/station-structure-model';
 
@@ -73,6 +74,62 @@ export class StationsService extends BaseService {
 
     return this.getStructure$Response(params,context).pipe(
       map((r: StrictHttpResponse<StationStructureModel>) => r.body as StationStructureModel)
+    );
+  }
+
+  /**
+   * Path part for operation apiStationStationIdNodeNodeIdLoadingGet
+   */
+  static readonly ApiStationStationIdNodeNodeIdLoadingGetPath = '/api/station/{stationId}/node/{nodeId}/loading';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getNodeLoading()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getNodeLoading$Response(params: {
+    stationId: number;
+    nodeId: string;
+  },
+  context?: HttpContext
+
+): Observable<StrictHttpResponse<NodeLoadingTimeline>> {
+
+    const rb = new RequestBuilder(this.rootUrl, StationsService.ApiStationStationIdNodeNodeIdLoadingGetPath, 'get');
+    if (params) {
+      rb.path('stationId', params.stationId, {});
+      rb.path('nodeId', params.nodeId, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'application/json',
+      context: context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<NodeLoadingTimeline>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getNodeLoading$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getNodeLoading(params: {
+    stationId: number;
+    nodeId: string;
+  },
+  context?: HttpContext
+
+): Observable<NodeLoadingTimeline> {
+
+    return this.getNodeLoading$Response(params,context).pipe(
+      map((r: StrictHttpResponse<NodeLoadingTimeline>) => r.body as NodeLoadingTimeline)
     );
   }
 
