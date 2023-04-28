@@ -14,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { EmptyPageComponent } from './empty-page/empty-page.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChronologyModule } from './chronology';
+import { NgxEchartsModule } from 'ngx-echarts';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,9 @@ import { ChronologyModule } from './chronology';
     ApiModule.forRoot({ rootUrl: '/assets/data' }),
     BrowserAnimationsModule,
     ChronologyModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

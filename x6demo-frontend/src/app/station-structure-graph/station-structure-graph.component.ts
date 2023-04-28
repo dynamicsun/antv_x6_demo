@@ -139,6 +139,7 @@ export class StationStructureGraphComponent
   }
   handleViewDetails(evt: NodeNgArguments) {
     this.dialogService.open(ChronologyModalComponent, {
+      ...ChronologyModalComponent.config,
       data: {
         handler:{
           stationId: getStationId(this.activatedRoute.snapshot.params),
