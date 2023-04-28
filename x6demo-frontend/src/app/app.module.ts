@@ -12,7 +12,8 @@ import {
 import { ApiModule } from './api/api.module';
 import { HttpClientModule } from '@angular/common/http';
 import { EmptyPageComponent } from './empty-page/empty-page.component';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ChronologyModule } from './chronology';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +28,8 @@ import { EmptyPageComponent } from './empty-page/empty-page.component';
     AppRoutingModule,
     HttpClientModule,
     ApiModule.forRoot({ rootUrl: '/assets/data' }),
+    BrowserAnimationsModule,
+    ChronologyModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

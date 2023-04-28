@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { ShapeDefinitionConf } from './shape-definition.directive';
 import { PortManager } from '@antv/x6/lib/model/port';
 
@@ -73,7 +73,9 @@ export class StationStructureShapesComponent {
     }),
   };
 
+  @Output() viewDetails = new EventEmitter<any>();
+
   handleView(el: any) {
-    console.log(el);
+    this.viewDetails.emit(el);
   }
 }

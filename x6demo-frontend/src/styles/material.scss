@@ -1,0 +1,24 @@
+@use "@angular/material" as mat;
+
+// prototype - https://github.com/angular/components/blob/main/src/material/core/theming/prebuilt/purple-green.scss
+
+// Define a theme.
+$primary: mat.define-palette(mat.$purple-palette, 700, 500, 800);
+$accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
+
+$theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+@mixin setup() {
+  @include mat.core();
+  @include mat.dialog-theme($theme);
+  @include mat.button-theme($theme);
+}

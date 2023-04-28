@@ -6,13 +6,18 @@ import {
   OnDestroy,
   ViewChild,
 } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { Graph, Edge } from '@antv/x6';
 import { NEVER, Subscription, map, switchMap, using } from 'rxjs';
 import { StationsService } from '../api/services';
 import { SourceReference, StationStructureModel } from '../api/models';
+import { MatDialog } from '@angular/material/dialog';
+import { ChronologyModalComponent } from '../chronology';
 
 type Dict<T> = { [id in string]: T };
+interface NodeNgArguments {
+  conf: { title: string, id: string };
+}
 class StructureScheme {
   private _layout!: Dict<{ x: number; y: number }>;
   constructor(private readonly graph: Graph) {}
@@ -39,9 +44,8 @@ class StructureScheme {
   }) {
     this.graph.addNode({
       id: conf.id,
-      // label: conf.title, // Напрямую не используется. Может пригодиться для тултипов
       shape: 'station-structure-' + conf.type,
-      data: { ngArguments: { conf } },
+      data: { ngArguments: { conf } as NodeNgArguments },
       ...this._layout[conf.id],
     });
     this._edges.push(
@@ -68,6 +72,9 @@ function usingGraph(factory: () => Graph) {
     () => NEVER
   );
 }
+function getStationId(params: Params){
+  return +params['stationId'];
+}
 @Component({
   selector: 'app-station-structure-graph',
   templateUrl: './station-structure-graph.component.html',
@@ -80,7 +87,8 @@ export class StationStructureGraphComponent
   private readonly _$subscription = new Subscription();
   constructor(
     private readonly activatedRoute: ActivatedRoute,
-    private readonly apiService: StationsService
+    private readonly apiService: StationsService,
+    private readonly dialogService: MatDialog
   ) {}
   ngOnDestroy(): void {
     this._$subscription.unsubscribe();
@@ -104,7 +112,7 @@ export class StationStructureGraphComponent
     this._$subscription.add(
       this.activatedRoute.params
         .pipe(
-          map((x) => +x['stationId']),
+          map(getStationId),
           switchMap((stationId) => this.apiService.getStructure({ stationId })),
           switchMap((structure) =>
             usingGraph(() => {
@@ -128,5 +136,15 @@ export class StationStructureGraphComponent
         )
         .subscribe()
     );
+  }
+  handleViewDetails(evt: NodeNgArguments) {
+    this.dialogService.open(ChronologyModalComponent, {
+      data: {
+        handler:{
+          stationId: getStationId(this.activatedRoute.snapshot.params),
+          nodeId: evt.conf.id,
+        },
+      }
+    });
   }
 }

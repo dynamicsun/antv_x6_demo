@@ -1,10 +1,10 @@
 @use "reset-css/reset.css";
 @use "@fontsource/roboto";
-/* You can add global styles to this file, and also import other style files */
+@use "material" as material;
 
 $body-margin: 8px;
 body {
-  font-family: "Roboto";
+  font-family: Roboto, "Helvetica Neue", sans-serif;
   margin: 0 $body-margin $body-margin $body-margin;
   background-color: black;
   color: white;
@@ -12,3 +12,5 @@ body {
 app-root {
   height: calc(100vh - $body-margin);
 }
+
+@include material.setup();
