@@ -10,6 +10,13 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
+## Автоматически генерируемый код
+
+1. Код в каталоге `src/app/api` генерируется автоматически из файла `swagger.yaml` командой `npm run update-models`.
+2. Тестовые данные временных рядов `src/assets/data/api/station/*/node/*/loading` генерируются автоматически случайным образом на основе данных о структуре, размещённых в соответствующих файлах `src/assets/data/api/station/*/structure` командой `npm run generate-chart-data`.
+
+Автоматически сгенерированные файлы ручному редактированию не подлежат.
+
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
