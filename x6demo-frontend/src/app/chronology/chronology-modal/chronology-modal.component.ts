@@ -22,6 +22,7 @@ function buildChartOptions(data: NodeLoadingTimeline): EChartsOption {
       type: 'value',
       scale: true,
       axisLabel: { color: 'white' },
+      name: 'Объём, м3',
     },
     series: [
       {
